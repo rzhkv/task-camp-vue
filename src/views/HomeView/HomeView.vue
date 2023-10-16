@@ -8,8 +8,8 @@ import { Button } from '@/components/Button'
 import { TaskPriority } from '@/components/TaskPriority'
 
 import { ProjectsCard } from '@/components/ProjectsCard'
-import { ModalWindow } from '@/components/ModalWindow'
-import AddProject from '@/components/forms/AddProject.vue'
+// import { ModalWindow } from '@/components/ModalWindow'
+// import AddProject from '@/components/forms/AddProject.vue'
 
 import { PlusIcon } from '@heroicons/vue/24/solid'
 

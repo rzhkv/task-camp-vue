@@ -10,7 +10,7 @@ const loading = useLoading();
 
 setTimeout(() => {
   loading.isLoading = false;
-}, 5000);
+}, 0);
 </script>
 
 <template>

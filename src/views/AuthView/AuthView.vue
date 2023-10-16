@@ -1,66 +1,32 @@
 <script setup>
-import { TextHeading } from '@/components/TextHeading'
-import { InputText } from '@/components/InputText'
-import { Button } from '@/components/Button'
+import { ref, watch, computed } from 'vue'
 
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuth } from '@/stores/auth'
+import NavTabs from '@/components/NavTabs/NavTabs.vue'
+import FormSignUp from '@/components/FormSignUp/FormSignUp.vue'
+import FormSignIn from '@/components/FormSignIn/FormSignIn.vue'
 
-import intus from 'intus'
-import { isRequired, isMin, isEmail } from 'intus/rules'
-
-const email = ref('')
-const password = ref('')
-
-const errors = ref({});
-
-const auth = useAuth()
-const router = useRouter()
-
-const login = async () => {
-  let validation = intus.validate(
-    {
-      email: email.value,
-      password: password.value
-    },
-    {
-      email: [isRequired(), isEmail()],
-      password: [isRequired(), isMin(8)]
-    },
-    {
-      'email.isRequired': 'Заполните поле почта',
-      'password.isRequired': 'Заполните поле пароль'
-    }
-  )
-
-  errors.value = validation.errors();
-
-  if (false) {
-    // if (validation.passes()) {
-    // await auth.resetAuth() // Need to change to loginWithCredentials
-    // auth.token = '1'
-    // router.push({ name: 'home' }) // Set Query
+const tabs = [
+  {
+    component: 'FormSignIn',
+    name: 'Вход'
+  },
+  {
+    component: 'FormSignUp',
+    name: 'Регистрация'
   }
-}
+]
+
+const selectedTab = ref('FormSignUp')
+
+const activeComponent = computed(() => {
+  return selectedTab.value === 'FormSignIn' ? FormSignIn : FormSignUp
+})
 </script>
 
 <template>
-  <form class="max-w-[320px] mx-auto" @submit.prevent="login">
-    <TextHeading tag="h3" class="mb-32 text-center"> Войти в аккаунт </TextHeading>
+  <div class="max-w-[420px] mx-auto">
+    <NavTabs :tabs="tabs" v-model:selectedTab="selectedTab"></NavTabs>
 
-    <div class="mb-16">
-      <InputText type="text" label="Электронная почта" v-model="email" :error="errors.email">
-      </InputText>
-    </div>
-
-    <div class="mb-16">
-      <InputText type="password" label="Пароль" v-model="password" :error="errors.password">
-      </InputText>
-    </div>
-
-    <div class="mt-32">
-      <Button type="submit" intent="primary" size="medium" class="w-full"> Войти </Button>
-    </div>
-  </form>
+    <component :is="activeComponent"> </component>
+  </div>
 </template>
