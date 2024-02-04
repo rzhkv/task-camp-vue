@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, computed } from 'vue'
 
 import NavTabs from '@/components/NavTabs/NavTabs.vue'
 import FormSignUp from '@/components/FormSignUp/FormSignUp.vue'
